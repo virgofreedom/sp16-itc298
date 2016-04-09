@@ -9,7 +9,7 @@ function serveStaticFile(res,path,contentType,responseCode){
             res.writeHead(responseCode,{'Content-Type': contentType});
             res.end(data);
         }
-    });
+    })
 }
 http.createServer(function(req,res){
     var path = req.url.toLocaleLowerCase();
@@ -28,6 +28,8 @@ http.createServer(function(req,res){
             break;
         default:
             // code
+            serveStaticFile(res,'/public/404.html','text/html',404);
+            break;
     }
 }).listen(process.env.PORT);
 
