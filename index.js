@@ -13,26 +13,29 @@ app.set('view engine', 'handlebars');
 app.get('/', function (req, res) {
     res.render('home');
 });
-app.get('/about', function (req, res) {
-    res.render('about');
-});
+
 
 // POST http://localhost:8080/api/users
 // parameters sent with 
-app.post('/api/users', function(req, res) {
-    var user_id = req.body.id;
-    var token = req.body.token;
-    var geo = req.body.geo;
-
-    res.send(user_id + ' ' + token + ' ' + geo);
+app.post('/search', function(req, res) {
+    var search_title = req.body.title;
+    var game_title =["call of duty","fifa 2016", "doom"];
+    var game_platforme = ["PS3","PS2","PS4"];
+    var game_price = ["49.99","59.99","69.99"];
+    
+    for (var i=0; i<game_title.length; i++){
+        if (search_title.toLowerCase() == game_title[i]){
+            var result = game_title[i] + "<br>" + game_platforme[i] + "<br>" + "$"+game_price[i] +'<br><a href="/">Search Again</a>';
+            break;
+        }else{
+            result = "No records found" +'<br><a href="/">Search Again</a>';
+        }
+        
+    }
+    
+    res.send(result);
 });
 
-app.get('/api/users', function(req, res) {
-  var user_id = req.param('id');
-  var token = req.param('token');
-  var geo = req.param('geo');  
 
-  res.send('My Get : '+user_id + ' ' + token + ' ' + geo);
-});
 
 app.listen(process.env.PORT);
