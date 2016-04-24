@@ -27,12 +27,20 @@ app.post('/search', function(req, res) {
     var resul = game.find(function(game){
         return game.title.toLowerCase() == search_title.toLowerCase();
     });
-    
+    var my_script = "<script>"+
+    "function sure(){"+
+    "if (confirm('Are you sure to delete this game?')) {"+
+    "window.open('/rm?title="+ search_title +"','_self')"+
+    "}"+
+    "}"+
+    "</script>";
     var edit_btn = '<a href="/edit?title='+search_title+'">Edit</a>';
     var add_btn = '<a href="/add?title='+search_title+'">Add this game?</a>';
+    var rm_btn =  '<a href="#" Onclick="sure();" >Remove this game</a>';
+   
     if (resul != undefined){
-        var result = resul.title + "<br>" + resul.plateform + "<br>" + "$"+resul.price +'<br><a href="/">Search Again</a>'
-        + ' '+edit_btn;
+        var result = my_script + resul.title + "<br>" + resul.plateform + "<br>" + "$"+resul.price +'<br><a href="/">Search Again</a>'
+        + ' '+edit_btn+" "+rm_btn;
     }else{
         result = search_title + " : No records found" +'<br><a href="/"><button>Search Again</button></a>'
         +add_btn+'<div id="form_add"></div>';
@@ -66,7 +74,7 @@ app.post('/save', function(req, res) {
     
     if (dbl == undefined){
         game.push(new_game);     
-        var message = g_title + "has been add to the list. Here is the new list :";
+        var message = g_title + " has been added to the list. Here is the new list :";
         tbl_row = "";
    game.forEach(function(game){
        tbl_row +=  "<tr><td>"+game.title+"</td><td>"+game.plateform+"</td><td>"+game.price+"</td></tr>";
@@ -111,7 +119,7 @@ app.post('/update', function(req, res) {
    
    
         game.splice(f_index,1,new_game);     
-        var message = g_title + "has been add to the list. Here is the new list :";
+        var message = g_title + " has been updated to the list. Here is the new list :";
         tbl_row = "";
    game.forEach(function(game){
        tbl_row +=  "<tr><td>"+game.title+"</td><td>"+game.plateform+"</td><td>"+game.price+"</td></tr>";
@@ -123,6 +131,25 @@ app.post('/update', function(req, res) {
 
    res.send(message+"<br>"+tbl+"<br>"+add_btn+" "+go_home);
    
+});
+
+app.get('/rm' , function(req, res) {
+    var g_title = req.param("title");
+    var f_index = game.findIndex(function(game){
+       return game.title.toLowerCase() == g_title.toLowerCase();
+   });
+    game.splice(f_index,1);   
+    var go_home = '<a href="/">Go back</a>';
+    var tbl = "";
+    var message = g_title + " has been deleted! Here the new list of game:";
+        tbl_row = "";
+   game.forEach(function(game){
+       tbl_row +=  "<tr><td>"+game.title+"</td><td>"+game.plateform+"</td><td>"+game.price+"</td></tr>";
+       return tbl_row;
+   });
+   tbl = "<table><tr><th>Game's Title</th><th>Plateform</th><th>Price</th></tr>"+tbl_row+"</table>";
+
+   res.send(message+"<br>"+tbl+"<br>"+go_home);
 });
 
 app.listen(process.env.PORT);
