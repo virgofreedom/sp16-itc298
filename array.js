@@ -1,6 +1,16 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var exphbs  = require('express-handlebars');
+var handlebars = require("express-handlebars").create({
+    defaultLayout:'main',
+    helper:{
+        section: function(name,option){
+            if(!this._section) this._section = {};
+            this._section[name] = option.fn(this);
+            return null;
+        }
+    }
+});
 var tbl_row="";
  var game =
     [
@@ -13,11 +23,48 @@ var app = express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res) {
-    res.render('home');
+    
+    res.render('jquery-test');
+});
+/*
+app.get('/', function (req, res) {
+    
+    var get_title = req.param("gtitle");
+    console.log(get_title);
+    var g_title = [];
+    game.forEach(function(game) {
+        g_title.push(game.title);
+    })
+    
+    if (get_title != undefined)
+    {
+        var resul = game.find(function(game){
+            return game.title == get_title;
+        });
+        if (resul != undefined){
+            var res_title = resul.title;
+            var res_plateforme = resul.plateform;
+            var res_price = resul.price;
+        }else
+        {
+            res_title = "No records found";
+        }
+        res.render('home',{game_title:g_title,res_title:res_title,res_plateforme:res_plateforme,res_price:res_price});
+    }else{
+        res.render('home',{game_title:g_title}); 
+    }
+    
+    
+});
+
+*/
+
+app.get('/about', function (req, res) {
+    res.render('about');
 });
 // POST http://localhost:8080/api/users
 // parameters sent with 

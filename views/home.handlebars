@@ -1,5 +1,43 @@
-<h1>Please enter the titlle here</h1>
-<form action="/search" method="POST">
-    <input type="text" name="title" placeholder="Games Title" required/>
-    <input type="submit" name="submit" value="Search"/>    
-</form>
+
+    <nav>
+        <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li></ul>
+    </nav>
+    <h1>Video Game Application</h1>
+    <div>
+        
+    </div>
+    <form action="/search" method="POST">
+        <input type="text" name="title" placeholder="Games Title" required/>
+        <input type="submit" name="submit" value="Search"/>    
+    </form>
+    <br>
+    <fieldset class="small-6 columns">
+    <a href="/add"><button>Add New Game</button></a>
+        <legend>Game's list</legend>
+    <table class="table table-striped table-bordered">
+        <tr><th>Game's title</th></tr>
+        {{#each game_title}}
+        <tr>
+            <td><a href="?gtitle={{.}}">{{.}}</a></td>
+        {{/each}}
+        
+        </tr>
+    </table>    
+    
+    </fieldset>
+    <fieldset class="small-6 columns">
+        <div class="page-header">
+            <h1>{{res_title}}</h1>
+        </div>
+        
+        <p>{{res_plateforme}}<br>{{res_price}}</p>
+    </fieldset>
+    
+    
+        
+    
+    <div class="small-12 columns">
+	<center>&copy; 2016 Rattana Neak</center>
+	</div>

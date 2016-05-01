@@ -2,14 +2,9 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var exphbs  = require('express-handlebars');
 var tbl_row="";
- var game =
-    [
-        {title:"Fifa", plateform:"PS4", price:"30"},
-        {title:"Call of Duty", plateform:"PS3", price:"20"}
-    ];
-    
 var app = express();
-
+var game = require("./lib/game.js");
+console.log(game.Title('sea'));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -22,8 +17,9 @@ app.get('/', function (req, res) {
 // POST http://localhost:8080/api/users
 // parameters sent with 
 app.post('/search', function(req, res) {
-    var search_title = req.body.title;
-   
+    var title = req.body.title;
+    
+   /*
     var resul = game.find(function(game){
         return game.title.toLowerCase() == search_title.toLowerCase();
     });
@@ -46,7 +42,7 @@ app.post('/search', function(req, res) {
         +add_btn+'<div id="form_add"></div>';
     }
     res.send(result);
-    
+    */
 });
 
 app.get('/add', function(req, res) {
