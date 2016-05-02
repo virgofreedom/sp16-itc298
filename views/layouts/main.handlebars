@@ -3,17 +3,25 @@
 <head>
     
     <meta charset="utf-8">
-    <title>My home</title>
-    {{{_sections.head}}}
-<link rel="stylesheet" href="views/css/main.css">
+    <title>My Applicatoin</title>
+
 </head>
 <body>
     
     <header>
-        
+        <nav>
+            <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li></ul>
+        </nav>
+    <h1>{{page_title}}</h1>
     </header>
     {{{body}}}
-    <script src='htpp://code.jquery.com/jquery-2.0.3.min.js'></script>
-    {{{_sections.jquery}}}
+    <footer>
+        <div >
+	    <center>&copy; 2016 Rattana Neak</center>
+	    </div>    
+    </footer>
+    
 </body>
 </html>
