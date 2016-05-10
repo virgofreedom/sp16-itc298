@@ -1,0 +1,30 @@
+
+
+<script>
+    function sure(){
+        if (confirm('Are you sure to delete this game?')) {
+            window.open('/rm?title={{games.title}}','_self')
+        }
+    }
+</script>
+{{#if rm}}
+<a href="/"><button>Go back</button></a>
+{{else}}
+<form method="POST" action="/add">
+    Title: <input type="text" name="title" placeholder="Title" value="{{games.title}}" required maxlength="100"></br>
+    Plateform: <input type="text" name="plateform" placeholder="Plateform" value="{{games.plateform}}" maxlength="100"></br>
+    Price: <input type="text" name="price" placeholder="Price"  value="{{games.price}}"maxlength="100"></br>
+
+    <button>{{#if action}}Add{{else}}Update{{/if}}</button>
+</form>
+{{#if action}}
+<a href="/"><button>Cancel</button></a>
+{{else}}
+<a href="#" Onclick="sure();" ><button>Remove this game</button></a>
+{{/if}}
+{{/if}}
+
+
+    
+
+

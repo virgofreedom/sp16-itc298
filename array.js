@@ -1,18 +1,27 @@
 var bodyParser = require('body-parser');
 var express = require('express');
-var handlebars = require('express-handlebars').create({defaultLayout: 'main' });
+
+var handlebars = require('express-handlebars').create({
+    defaultLayout: 'main',
+    
+    
+});
+
+
 var tbl_row="";
 var app = express();
 var games = require("./lib/game.js");
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
+app.use(express.static(__dirname +'/views'));
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 app.get('/about', function (req, res) {
     res.render('about');
 });
+
 app.get('/', function (req, res) {
     if (req.param('gtitle') != undefined){
         var search_res = games.findGame(req.param('gtitle'));
