@@ -1,3 +1,5 @@
+
+
 var express = require("express");
 var app = express();
 
@@ -10,8 +12,11 @@ app.use('/api', require('cors')());
 
 // set template engine
 var handlebars = require('express-handlebars').create({defaultLayout: 'main', extname: '.handlebars' });
+
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars' );
+
 
 var routes = require("./lib/routes")(app);
 
